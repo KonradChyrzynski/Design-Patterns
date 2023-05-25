@@ -4,6 +4,9 @@ from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IYamlFile
 
 class YamlApi(IYamlFile):
 
+    def __init__(self):
+        self.file = None
+
     def print_yaml_file(self, filename):
         print(self.load_yaml_file("configuration_yaml_9_0"))
 
@@ -21,4 +24,4 @@ class YamlApi(IYamlFile):
     def load_yaml_file(self, filename):
         with open(filename, "r") as file:
             data = yaml.safe_load(file)
-            return data
+            self.file = data

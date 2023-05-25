@@ -10,8 +10,6 @@ class JsonToFileClientAdapter(IFileClient):
 
     def find_element_value(self, element_name):
         self.json_file.find_element_in_json(element_name)
-        pass
 
     def load_file(self, file_name):
         self.json_file.load_json_file(file_name)
-        pass

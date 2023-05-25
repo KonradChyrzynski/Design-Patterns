@@ -2,11 +2,16 @@ import json
 
 from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IJsonFile
 
+
 class JsonApi(IJsonFile):
+
+    def __init__(self):
+        self.file = None
+
     def print_json_file(self, element_name, filename):
         print(self.load_json_file(filename))
 
-    def find_element_in_json(self, element, json_data):
+    def find_element_in_json(self, element):
         results = []
 
         def search_json(data):
@@ -20,10 +25,10 @@ class JsonApi(IJsonFile):
                 for item in data:
                     search_json(item)
 
-            search_json(json_data)
+            search_json(self.file)
             return results
 
     def load_json_file(self, filename):
         with open(filename, "r") as file:
             data = json.load(file)
-            return data
+            self.file = data
