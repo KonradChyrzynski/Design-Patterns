@@ -1,7 +1,6 @@
 import yaml
 
 from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IYamlFile
-from PythonAdapterPattern.AdapterPatternVenv.src.Adapters import YamlToFileClientAdapter
 
 class YamlApi(IYamlFile):
 
@@ -21,5 +20,5 @@ class YamlApi(IYamlFile):
 
     def load_yaml_file(self, filename):
         with open(filename, "r") as file:
-            data = YamlToFileClientAdapter.safe_load(file)
+            data = yaml.safe_load(file)
             return data
