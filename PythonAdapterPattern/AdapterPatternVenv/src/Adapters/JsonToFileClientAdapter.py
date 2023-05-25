@@ -6,10 +6,10 @@ class JsonToFileClientAdapter(IFileClient):
         self.json_file_client = _json_file_client
 
     def print_file(self):
-        print(self.json_file_client.print_json_file())
+        self.json_file_client.print_json_file()
 
     def find_element_value(self, element_name):
-        self.json_file.find_element_in_json(element_name)
+        self.json_file_client.find_element_in_json(element_name)
 
     def load_file(self, file_name):
-        self.json_file.load_json_file(file_name)
+        self.json_file_client.load_json_file(file_name)
