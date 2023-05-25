@@ -1,12 +1,12 @@
 import json
 
-from PythonAdapterPattern import IJsonFile
+from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IJsonFile
 
 class JsonApi(IJsonFile):
     def print_json_file(self, element_name, filename):
         print(self.load_json_file(filename))
 
-    def find_element_in_json(element, json_data):
+    def find_element_in_json(self, element, json_data):
         results = []
 
         def search_json(data):

@@ -1,6 +1,7 @@
-from PythonAdapterPattern import yaml
-from PythonAdapterPattern import YamlToFileClientAdapter
+import yaml
 
+from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IYamlFile
+from PythonAdapterPattern.AdapterPatternVenv.src.Adapters import YamlToFileClientAdapter
 
 class YamlApi(IYamlFile):
 

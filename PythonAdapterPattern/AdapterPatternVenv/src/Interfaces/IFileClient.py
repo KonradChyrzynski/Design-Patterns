@@ -8,7 +8,7 @@ class IFileClient(metaclass=ABCMeta):
         raise NotImplementedError("load_file method not implemented")
 
     @abstractmethod
-    def print_file(self, filename):
+    def print_file(self, file_name):
         raise NotImplementedError("print_file method not implemented")
 
     @abstractmethod
