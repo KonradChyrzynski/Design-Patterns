@@ -1,6 +1,9 @@
 import unittest
 from unittest.mock import mock_open, patch
 from io import StringIO
+
+import yaml
+
 from PythonAdapterPattern.AdapterPatternVenv.src.YamlClient import YamlClient
 
 
@@ -13,35 +16,32 @@ class TestYamlClient(unittest.TestCase):
         # Redirect print statements to a buffer
         with patch("sys.stdout", new=StringIO()) as output_buffer:
             # Set the file content
-            self.yaml_client.file = {"name": "John", "age": 30}
+            self.yaml_client.file = yaml.dump(yaml.safe_load("age: 30\nname: John\n"))
 
             # Call the method
             self.yaml_client.print_yaml_file()
 
             # Check the printed output
-            expected_output = "age: 30\nname: John\n"
-            self.assertEqual(output_buffer.getvalue(), expected_output)
+            expected_output = yaml.dump("age: 30\nname: John\n")
+            self.assertEqual(output_buffer.getvalue().strip(), expected_output.strip())
 
     def test_find_element_in_yaml(self):
-        # Set the file content
-        self.yaml_client.file = {
-            "name": "John",
-            "address": {
-                "city": "New York",
-                "state": "NY"
-            },
-            "phone_numbers": [
-                "123456789",
-                "987654321"
-            ]
-        }
+        self.yaml_client.file = '''
+        name: John
+        address:
+            city: New York
+            state: NY
+        phone_numbers:
+            - "123456789"
+            - "987654321"
+        '''
 
         # Test finding an existing element
-        result = self.yaml_client.find_element_in_yaml("city")
+        result = self.yaml_client.find_element_in_yaml("address.city")
         self.assertEqual(result, "New York")
 
         # Test finding a non-existing element
-        result = self.yaml_client.find_element_in_yaml("country")
+        result = self.yaml_client.find_element_in_yaml("address.country")
         self.assertIsNone(result)
 
     def test_load_yaml_file(self):

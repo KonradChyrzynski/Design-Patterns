@@ -1,4 +1,4 @@
-from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IFileClient
+from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces.IFileClient import IFileClient
 
 
 class JsonToFileClientAdapter(IFileClient):
@@ -9,7 +9,7 @@ class JsonToFileClientAdapter(IFileClient):
         self.json_file_client.print_json_file()
 
     def find_element_value(self, element_name):
-        self.json_file_client.find_element_in_json(element_name)
+        return self.json_file_client.find_element_in_json(element_name)
 
-    def load_file(self, file_name):
-        self.json_file_client.load_json_file(file_name)
+    def load_file(self, file_path):
+        self.json_file_client.load_json_file(file_path)

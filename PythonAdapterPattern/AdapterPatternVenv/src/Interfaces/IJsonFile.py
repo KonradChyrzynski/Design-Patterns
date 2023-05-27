@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 class IJsonFile(metaclass=ABCMeta):
 
     @abstractmethod
-    def load_json_file(self, file_name):
+    def load_json_file(self, file_path):
         raise NotImplementedError("load_yaml_file method not implemented")
 
     @abstractmethod

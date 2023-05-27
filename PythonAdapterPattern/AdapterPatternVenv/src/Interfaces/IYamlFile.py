@@ -8,7 +8,7 @@ class IYamlFile(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @abstractmethod
-    def find_element_in_yaml(self, filename):
+    def find_element_in_yaml(self, element_key):
         raise NotImplementedError()
 
     @abstractmethod

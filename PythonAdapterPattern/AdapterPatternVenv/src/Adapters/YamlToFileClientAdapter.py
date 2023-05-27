@@ -1,4 +1,4 @@
-from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces import IFileClient
+from PythonAdapterPattern.AdapterPatternVenv.src.Interfaces.IFileClient import IFileClient
 
 
 class YamlToFileClientAdapter(IFileClient):
