@@ -24,7 +24,7 @@ class TestJsonClient(unittest.TestCase):
     def test_find_element_in_json(self):
         # Set the file content
         self.json_client.file = {
-            "name": "John",
+            "name": "Json",
             "address": {
                 "city": "New York",
                 "state": "NY"

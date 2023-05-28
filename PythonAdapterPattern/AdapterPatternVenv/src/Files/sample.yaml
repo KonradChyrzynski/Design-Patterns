@@ -1,22 +1,25 @@
-stages:
-  - build
-  - test
+services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
 
-build-code-job:
-  stage: build
-  script:
-    - echo "Check the ruby version, then build some Ruby project files:"
-    - ruby -v
-    - rake
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
 
-test-code-job1:
-  stage: test
-  script:
-    - echo "If the files are built successfully, test some files with one command:"
-    - rake test1
-
-test-code-job2:
-  stage: test
-  script:
-    - echo "If the files are built successfully, test other files with a different command:"
-    - rake test2
+volumes:
+  todo-mysql-data:

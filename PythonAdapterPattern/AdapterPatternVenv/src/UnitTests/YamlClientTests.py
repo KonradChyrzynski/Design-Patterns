@@ -26,23 +26,62 @@ class TestYamlClient(unittest.TestCase):
             self.assertEqual(output_buffer.getvalue().strip(), expected_output.strip())
 
     def test_find_element_in_yaml(self):
-        self.yaml_client.file = '''
+        self.yaml_client.file = yaml.safe_load('''
         name: John
+        city: Rio
         address:
             city: New York
             state: NY
         phone_numbers:
             - "123456789"
             - "987654321"
-        '''
+        ''')
 
         # Test finding an existing element
-        result = self.yaml_client.find_element_in_yaml("address.city")
-        self.assertEqual(result, "New York")
+        result = self.yaml_client.find_element_in_yaml("city")
+        self.assertEqual(result, ['Rio', 'New York'])
 
         # Test finding a non-existing element
-        result = self.yaml_client.find_element_in_yaml("address.country")
-        self.assertIsNone(result)
+        result = self.yaml_client.find_element_in_yaml("country")
+        self.assertEqual(result, [])
+
+    def test_find_element_in_yaml_docker_file(self):
+        self.yaml_client.file = yaml.safe_load('''
+            services:
+              app:
+                image: node:18-alpine
+                command: sh -c "yarn install && yarn run dev"
+                ports:
+                  - 3000:3000
+                working_dir: /app
+                volumes:
+                  - ./:/app
+                environment:
+                  MYSQL_HOST: mysql
+                  MYSQL_USER: root
+                  MYSQL_PASSWORD: secret
+                  MYSQL_DB: todos
+
+              mysql:
+                image: mysql:8.0
+                volumes:
+                  - todo-mysql-data:/var/lib/mysql
+                environment:
+                  MYSQL_ROOT_PASSWORD: secret
+                  MYSQL_DATABASE: todos
+
+            volumes:
+              todo-mysql-data:
+            ''')
+
+        # Test finding an existing element
+        result = self.yaml_client.find_element_in_yaml("image")
+        self.assertEqual(result, ['node:18-alpine', 'mysql:8.0'])
+        print(result)
+
+        # Test finding a non-existing element
+        result = self.yaml_client.find_element_in_yaml("country")
+        self.assertEqual(result, [])
 
     def test_load_yaml_file(self):
         # Set up a mock for the open function
